@@ -2,6 +2,8 @@ package com.example.model;
 
 import java.util.Collection;
 
+
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
+
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
@@ -27,6 +30,8 @@ public class User {
 	
 	@Column(name = "last_name")
 	private String lastName;
+	
+	
 	private String password;
 	private String email;
 	

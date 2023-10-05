@@ -1,6 +1,10 @@
 package com.example.web;
 
+import jakarta.validation.Valid;
+
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +40,20 @@ public class UserRegistrationController {
 	
 	
 	@PostMapping
-	public String RegisterUserAccount(@ModelAttribute("user") UserRegistrationDto userRegistrationDto)
+	public String RegisterUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userRegistrationDto, BindingResult bindingResult)
 	{
+		
+	 
+		if (bindingResult.hasErrors()) {
+	        // Handle validation errors, e.g., return to the registration form with error messages
+			 System.out.println("Validation failed. Returning to registration form.");
+	        return "registration";
+	    }
+		
+		 System.out.println("Validation passed. Proceeding with user registration logic.");
+		
 		userService.save(userRegistrationDto);
+		
 		return "redirect:/registration?success";
 	}
 
