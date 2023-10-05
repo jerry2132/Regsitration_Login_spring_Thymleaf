@@ -2,8 +2,10 @@ package com.example.model;
 
 import java.util.Collection;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,15 +22,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "firstName")
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name = "lastName")
+	@Column(name = "last_name")
 	private String lastName;
 	private String password;
 	private String email;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(
@@ -37,12 +39,12 @@ public class User {
 	
 	
 	
-	public User(String firstName, String lastName, String password, String email, Collection<Role> roles) {
+	public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.password = password;
 		this.email = email;
+		this.password = password;
 		this.roles = roles;
 	}
 	
