@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Role;
@@ -19,11 +20,11 @@ import com.example.web.dto.UserRegistrationDto;
 
 @Service
 public class UserServiceImpl implements UserService{
-
-	
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	
 	public UserServiceImpl(UserRepository userRepository) {
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService{
 		
 		System.out.println("Inside UserService.save method");
 		User user =new User(registrationDto.getFirstName(),registrationDto.getLastName(),registrationDto.getEmail(),
-				registrationDto.getPassword(), Arrays.asList(new Role("ROLE_USER")));
+				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
 		return userRepository.save(user);
 		
 		
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService{
 			throw new UsernameNotFoundException("Invalid Username");
 		}
 		
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), null);
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles)
