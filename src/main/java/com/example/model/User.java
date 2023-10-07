@@ -1,6 +1,6 @@
 package com.example.model;
 
-import java.util.Collection;
+import java.util.*;
 
 
 
@@ -40,8 +40,14 @@ public class User {
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(
 			name = "role_id", referencedColumnName = "id"))
-	private Collection<Role> roles;
+	private  Collection<Role> roles = new ArrayList<>();;
+
 	
+	
+	public User()
+	{
+		
+	}
 	
 	
 	public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
@@ -52,7 +58,6 @@ public class User {
 		this.password = password;
 		this.roles = roles;
 	}
-	
 	
 	public Long getId() {
 		return id;

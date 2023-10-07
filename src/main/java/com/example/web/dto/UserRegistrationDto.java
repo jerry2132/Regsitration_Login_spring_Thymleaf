@@ -5,18 +5,19 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class UserRegistrationDto {
 	
-	@NotEmpty(message ="first name is required")
+	@NotEmpty(message ="Unable to save User ,first name is required")
 	private String firstName;
 	
-	@NotEmpty(message ="last name is required")
+	@NotEmpty(message ="Unable to save User ,last name is required")
 	private String lastName;
 	
-	@NotEmpty(message ="Email is required")
+	@NotEmpty(message ="Unable to save User ,Email is required")
 	@Email(message = "Invalid email format")
 	private String email;
 	
-	@NotEmpty(message ="password is required")
+	@NotEmpty(message ="Unable to save User ,password is required")
 	private String password;
+	
 	
 	public UserRegistrationDto()
 	{
@@ -56,8 +57,5 @@ public class UserRegistrationDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
 
 }

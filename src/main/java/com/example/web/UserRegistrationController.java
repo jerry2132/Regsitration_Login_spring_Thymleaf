@@ -25,17 +25,27 @@ public class UserRegistrationController {
 		this.userService = userService;
 	}
 	
-	
 	@ModelAttribute("user")
-	public UserRegistrationDto userRegistrationDto()
+    public UserRegistrationDto userRegistrationDto() {
+        return new UserRegistrationDto();
+    }
+	
+	@GetMapping("/home")
+	public String home()
 	{
-		return new UserRegistrationDto();
+		return "home";
 	}
 	
-	@GetMapping
+	@GetMapping("/registration")
 	public String showRegistrationForm()
 	{
 		return "registration";
+	}
+	
+	@GetMapping("/login")
+	public String loign()
+	{
+		return "login";
 	}
 	
 	
@@ -45,12 +55,9 @@ public class UserRegistrationController {
 		
 	 
 		if (bindingResult.hasErrors()) {
-	        // Handle validation errors, e.g., return to the registration form with error messages
-			 System.out.println("Validation failed. Returning to registration form.");
 	        return "registration";
 	    }
 		
-		 System.out.println("Validation passed. Proceeding with user registration logic.");
 		
 		userService.save(userRegistrationDto);
 		
