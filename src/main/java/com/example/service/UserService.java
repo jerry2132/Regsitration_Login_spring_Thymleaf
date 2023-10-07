@@ -8,6 +8,6 @@ public interface UserService {
 
 User save(UserRegistrationDto registrationDto);
 
-User findByUserName(String email);
+User findByEmail(String email);
 
 }

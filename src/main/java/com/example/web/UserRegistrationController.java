@@ -36,7 +36,7 @@ public class UserRegistrationController {
 		return "home";
 	}
 	
-	@GetMapping("/registration")
+	@GetMapping
 	public String showRegistrationForm()
 	{
 		return "registration";

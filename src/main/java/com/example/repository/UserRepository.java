@@ -9,6 +9,6 @@ import com.example.model.*;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	User findByUserName(String email);
+	User findByEmail(String email);
 
 }
