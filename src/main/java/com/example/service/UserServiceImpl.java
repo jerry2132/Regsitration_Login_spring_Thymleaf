@@ -1,6 +1,9 @@
 package com.example.service;
 
 import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import java.util.Collection;
 import org.springframework.stereotype.Service;
 //import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,9 @@ import com.example.web.dto.UserRegistrationDto;
 @Service
 public class UserServiceImpl implements UserService{
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	private UserRepository userRepository;
 	
 	public UserServiceImpl(UserRepository userRepository) {
@@ -24,7 +30,7 @@ public class UserServiceImpl implements UserService{
 	
 		User user = new User(registrationDto.getFirstName(), 
 				registrationDto.getLastName(), registrationDto.getEmail(),
-				registrationDto.getPassword(), Arrays.asList(new Role("ROLE_USER")));
+				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
 		
 		return userRepository.save(user);
 	}

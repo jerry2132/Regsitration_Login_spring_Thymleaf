@@ -15,8 +15,13 @@ public class Role {
 	private Long id;
 	private String name;
 
+
 	
 	
+	public Role() {
+		super();
+	}
+
 	public Role(String name) {
 		super();
 		this.name = name;
