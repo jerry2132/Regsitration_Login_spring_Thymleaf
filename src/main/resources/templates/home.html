@@ -35,11 +35,11 @@
     </style>
 <body>
 
-
+<span sec:authorize="isAuthenticated"><a th:href="@{/logout}">Logout </a></span>
 
 <div class="dashboard">
         <h1>Welcome to Your Dashboard</h1>
-        <p>Hello, <span th:text="${userdetail.firstName}" class="user-name">John Doe</span>!</p>
+        <p>Hello, <span th:text="${userdetails.firstName}" class="user-name">John Doe</span>!</p>
         
         <!-- Add your dashboard widgets and content here -->
     </div>

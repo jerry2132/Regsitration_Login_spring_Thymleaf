@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.model.User;
 import com.example.service.UserService;
 import com.example.web.dto.UserRegistrationDto;
 
@@ -58,9 +59,16 @@ public class UserRegistrationController {
 
 	@PostMapping
 	public String RegisterUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userRegistrationDto,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
+			return "registration";
+		}
+		
+		User user = userService.findByEmail(userRegistrationDto.getEmail());
+		if(user != null)
+		{
+			model.addAttribute("userexist", user);
 			return "registration";
 		}
 

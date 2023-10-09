@@ -21,11 +21,11 @@ public class MainController {
 	}
 	
 	
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String home(Model model, Principal principal) {
 		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-		model.addAttribute("userdetail", userDetails);
+		model.addAttribute("userdetails", userDetails);
 		return "home";
 	}
 	
