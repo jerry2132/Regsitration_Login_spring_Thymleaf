@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //import java.util.Collection;
 import org.springframework.stereotype.Service;
 //import org.springframework.security.core.userdetails.UserDetails;
-import com.example.model.Role;
 import com.example.model.User;
 import com.example.repository.UserRepository;
 import com.example.web.dto.UserRegistrationDto;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService{
 	
 		User user = new User(registrationDto.getFirstName(), 
 				registrationDto.getLastName(), registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
+				passwordEncoder.encode(registrationDto.getPassword()));
 		
 		return userRepository.save(user);
 	}

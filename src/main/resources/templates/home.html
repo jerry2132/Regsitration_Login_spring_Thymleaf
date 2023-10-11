@@ -11,13 +11,31 @@
             margin: 0;
             padding: 0;
         }
-
+     
         .dashboard {
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin: 20px;
             padding: 20px;
         }
+        
+        .logout-button {
+    background-color: #FF0000; /* Red background color */
+    color: #FFFFFF; /* White text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underlines */
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s; /* Add a hover effect for background color */
+
+    /* Center the text vertically and horizontally */
+    line-height: 1.5;
+    text-align: center;
+}
+
+        
 
         .dashboard h1 {
             font-size: 24px;
@@ -34,8 +52,7 @@
         /* Add more styles for your dashboard widgets here */
     </style>
 <body>
-
-<span sec:authorize="isAuthenticated"><a th:href="@{/logout}">Logout </a></span>
+<span sec:authorize="isAuthenticated"><a th:href="@{/logout}" class="logout-button">Logout </a></span>
 
 <div class="dashboard">
         <h1>Welcome to Your Dashboard</h1>
