@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		if(user==null)
 		{
-			throw new UsernameNotFoundException("usernaem or password not found");
+			throw new UsernameNotFoundException("username or password not found");
 		}
 		return new CustomUserDetails(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(),authorities());
 		
