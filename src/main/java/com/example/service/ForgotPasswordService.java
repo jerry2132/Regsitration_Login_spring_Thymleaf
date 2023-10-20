@@ -35,7 +35,7 @@ public class ForgotPasswordService {
 		MimeMessage message  = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message); 
 		
-		String emailContent  = "<p>Hello user</p>"+"click the link below to reset password"+"<p><a href\"" + emailLink + "\"> change my password</a></p>"
+		String emailContent  = "<p>Hello user</p>"+"click the link below to reset password"+"<p><a href=\" " + emailLink + "\"> change my password</a></p>"
 				+"<br>"
 				+"ignore if not done by you";
 		

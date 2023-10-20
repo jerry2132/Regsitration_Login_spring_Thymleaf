@@ -8,5 +8,5 @@ import com.example.model.ForgotPasswordToken;
 @Repository
 public interface ForgotPasswordRepository extends JpaRepository<ForgotPasswordToken, Long>{
 
-	ForgotPasswordToken findByTokken(String token);
+	ForgotPasswordToken findByToken(String token);
 }
