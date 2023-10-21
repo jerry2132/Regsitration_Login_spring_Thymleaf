@@ -3,6 +3,8 @@ package com.example.web;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.ForgotPasswordToken;
 import com.example.model.User;
+import com.example.repository.ForgotPasswordRepository;
 import com.example.service.ForgotPasswordService;
 import com.example.service.UserService;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ForgotPasswordController {
@@ -24,6 +29,12 @@ public class ForgotPasswordController {
 	
 	@Autowired
 	private ForgotPasswordService forgotPasswordService;
+	
+	@Autowired
+	private ForgotPasswordRepository forgotPasswordRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/password-request")
 	public String passwordRequest()
@@ -49,7 +60,9 @@ public class ForgotPasswordController {
 		forgotPasswordToken.setUser(user);
 		forgotPasswordToken.setUsed(false);
 		
-		String emailLink = "http:localhost:8080/reset-password?token= " + forgotPasswordToken.getToken();
+		forgotPasswordRepository.save(forgotPasswordToken);
+		
+		String emailLink = "http://localhost:8080/reset-password?token=" + forgotPasswordToken.getToken();
 		
 		try {
 			forgotPasswordService.sendMail(user.getEmail(), "Password Reset Link", emailLink);
@@ -65,15 +78,29 @@ public class ForgotPasswordController {
 	}
 	
 	@GetMapping("/reset-password")
-	public String resetPassword()
+	public String resetPassword(@Param(value="token") String token, Model model, HttpSession session)
 	{
-		return "reset-password";
+		session.setAttribute("token", token);
+		ForgotPasswordToken forgotPasswordToken = forgotPasswordRepository.findByToken(token);
+		return forgotPasswordService.checkValidity(forgotPasswordToken, model);
 	}
 	
 	@PostMapping("/reset-password")
-	public String saveResetPassword()
+	public String saveResetPassword(HttpServletRequest request, HttpSession session, Model model)
 	{
-		return "reset-password";
+		String password = request.getParameter("password");
+		String token = (String)session.getAttribute("token");
+		
+		ForgotPasswordToken forgotPasswordToken = forgotPasswordRepository.findByToken(token);
+		User user = forgotPasswordToken.getUser();
+		user.setPassword(passwordEncoder.encode(password));
+		forgotPasswordToken.setUsed(true);
+		userService.save(user);
+		forgotPasswordRepository.save(forgotPasswordToken);
+		
+		model.addAttribute("message", "password changed successfully");
+		
+		return "login";
 	}
 
 }

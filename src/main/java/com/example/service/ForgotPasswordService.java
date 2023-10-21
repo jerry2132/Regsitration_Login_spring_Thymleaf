@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.*;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import com.example.model.ForgotPasswordToken;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -48,4 +51,30 @@ public class ForgotPasswordService {
 		
 	}
 	
+	public boolean isExpired(ForgotPasswordToken forgotPasswordToken)
+	{
+		return LocalDateTime.now().isAfter(forgotPasswordToken.getExpireTime());
+	}
+	
+	public String checkValidity(ForgotPasswordToken forgotPasswordToken, Model model)
+	{
+		if(forgotPasswordToken == null)
+		{
+			model.addAttribute("error", "Invalid Token");
+			return "error-page";
+		}
+		
+		else if(forgotPasswordToken.isUsed())
+		{
+			model.addAttribute("error", "Already Used");
+			return "error-page";
+		}
+		else if (isExpired(forgotPasswordToken))
+		{
+			model.addAttribute("error", "Token Expired");
+			return "error-page";
+		}
+		
+		return "reset-password";
+	}
 }
