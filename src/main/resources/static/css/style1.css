@@ -1,0 +1,84 @@
+body {
+	font-family: Arial, sans-serif;
+	/*background-color: #DE9F29;*/
+	background-image: url("/css/pen2.png");
+	background-size: cover;
+	margin: 0;
+	display: flex;
+	/*align-items: center;
+            justify-content: center;*/
+	height: 100vh;
+}
+
+.container {
+	/*background-color: #fff;*/
+	background-color: rgba(255, 255, 255, 0);
+	margin: 110px 0 0 175px;
+	/*border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+	width: 400px;
+}
+
+label {
+	display: block;
+	margin: 10px 0 5px;
+	/*color: #333;*/
+	color: #000000;
+	font-style: italic;
+	font-weight: bold;
+}
+
+input {
+	width: 100%;
+	padding: 6px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+	border: 1px solid #333;
+	border-radius: 40px;
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 40px;
+}
+
+button {
+	background-color: #000000;
+	/*background-color: rgba(0, 0, 0, 1);*/
+	color: #fff;
+	padding: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	border-radius: 40px;
+	width: 400px;
+	font-style: italic;
+}
+
+h2 {
+	text-align: center;
+	color: #000000;
+	border-radius: 40px;
+	/*background-color: rgba(0, 0, 0, 0);*/
+	font-weight: bold;
+	font-style: italic;
+}
+
+span {
+	font-style: italic;
+}
+
+a {
+	color: #000000;
+}
+
+.login-container {
+	margin: 110px 0 0 175px;
+}
+
+.error-message {
+	background-color: #000000;
+	color: #fff;
+	font-size: 12px;
+	padding: 2px;
+	margin: 0 auto;
+	width: 80%;
+	text-align: center;
+	border-radius: 40px;
+}
